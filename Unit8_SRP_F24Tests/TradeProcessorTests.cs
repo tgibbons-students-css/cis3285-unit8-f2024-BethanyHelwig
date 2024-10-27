@@ -35,12 +35,6 @@ namespace SingleResponsibilityPrinciple.Tests
         }
 
         [TestMethod()]
-        public void ProcessTradesTest()
-        {
-            //Assert.Fail();
-        }
-
-        [TestMethod()]
         public void TestNormalFile()
         {
             //Arrange
@@ -117,9 +111,33 @@ namespace SingleResponsibilityPrinciple.Tests
         }
 
         [TestMethod()]
-        public void ReadTradeDataTest()
+        public void TestNumberOfLinesReadIn()
         {
-            Assert.Fail();
+            //Arrange
+            var tradeStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Unit8_SRP_F24Tests.goodtrades4.txt");
+            var tradeProcessor = new TradeProcessor();
+
+            //Act
+            IEnumerable<string> testLines = tradeProcessor.ReadTradeData(tradeStream);
+
+            //Assert
+            Assert.AreEqual(4, testLines.Count());
+        }
+
+        [TestMethod()]
+        public void TestReadingInFileThatDoesNotExist()
+        {
+            //Arrange
+            var tradeStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Unit8_SRP_F24Tests.nothinghere.txt");
+            var tradeProcessor = new TradeProcessor();
+
+            //Act
+            int countBefore = CountDbRecords();
+            tradeProcessor.ReadTradeData(tradeStream);
+
+            //Assert
+            int countAfter = CountDbRecords();
+            Assert.AreEqual(countBefore, countAfter);
         }
     }
 }

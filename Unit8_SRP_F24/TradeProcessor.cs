@@ -14,16 +14,26 @@ namespace SingleResponsibilityPrinciple
         /// <returns> Returns a list of strings, one for each string for each line in the file </returns>
         public IEnumerable<string> ReadTradeData(Stream stream)
         {
-            // read rows
             List<string> lines = new List<string>();
-            using (var reader = new StreamReader(stream))
+
+            try
             {
-                string line;
-                while ((line = reader.ReadLine()) != null)
+                // read rows
+                using (var reader = new StreamReader(stream))
                 {
-                    lines.Add(line);
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        lines.Add(line);
+                    }
                 }
+                //return lines;
             }
+            catch (Exception ArgumentNullException)
+            {
+                LogMessage("WARN: File cannot be located and was not imported.");
+            }
+
             return lines;
         }
 
@@ -51,6 +61,11 @@ namespace SingleResponsibilityPrinciple
             if (!int.TryParse(fields[1], out tradeAmount))
             {
                 LogMessage("WARN: Trade amount on line {0} not a valid integer: '{1}'", currentLine, fields[1]);
+                return false;
+            }
+            else if (tradeAmount < 0)
+            {
+                LogMessage("WARN: Trade amount on line {0} not a valid integer (less than zero): '{1}'", currentLine, fields[1]);
                 return false;
             }
 

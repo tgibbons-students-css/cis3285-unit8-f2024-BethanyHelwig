@@ -12,15 +12,17 @@
   <ItemGroup>
     <None Remove="badtrade1.txt" />
     <None Remove="badtradenegativelot.txt" />
-    <None Remove="goodtrades.txt" />
+    <None Remove="goodtrades - Copy.txt" />
+    <None Remove="goodtrades4.txt" />
     <None Remove="zerotrades.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="badtradenegativelot.txt" />
     <EmbeddedResource Include="badtrade1.txt" />
+    <EmbeddedResource Include="goodtrades - Copy.txt" />
     <EmbeddedResource Include="zerotrades.txt" />
-    <EmbeddedResource Include="goodtrades.txt" />
+    <EmbeddedResource Include="goodtrades4.txt" />
   </ItemGroup>
 
   <ItemGroup>
